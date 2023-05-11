@@ -10,6 +10,7 @@ import {
     DropdownItem
 } from 'reactstrap';
 import { getMoodIcon } from 'utilities/weather.js';
+import {connect} from 'react-redux';
 import {
     createPost,
     input,
@@ -24,12 +25,33 @@ import './PostForm.css';
 function PostForm (props){
     const inputEl = useRef(null);
     const handleMoodToggle = () => {
-        setMoodToggle(!moodToggle);
-        dispatch(toggleMood())
+        setMoodToggle(!props.moodToggle);
+        props.dispatch(toggleMood())
     }
     const handleDropdownSelect = (mood) => {
         //come back to this later
-        dispatch(selectMood(mood))
+        props.dispatch(selectMood(mood))
+    }
+    const handlePost = () => {
+        if(props.mood === 'na'){
+            props.dispatch(setMoodToggle(true));
+        }
+        if(!props.inputValue){
+            props.dispatch(inputDanger(true));
+        }
+        props.dispatch(createPost(props.mood, props.inputValue));
+        props.dispatch(input(''));
+        props.dispatch(selectMood('na'));
+    }
+    const handleInputChange = (e) => {
+        const text = e.target.value
+        props.dispatch(input(text));
+        if(text && props.inputDanger){
+            props.dispatch(inputDanger(false));
+        }
+    }
+    const inputDangerClass = () => {
+        props.dispatch(inputDanger(props.inputDanger));
     }
     // TODO
     //handleDropdownSelect
@@ -41,10 +63,10 @@ function PostForm (props){
         <div className="post-form">
             <Alert color='info' className={`d-flex flex-column flex-sm-row justify-content-center ${inputDangerClass}`}>
                 <div className='mood align-self-start'>
-                    <ButtonDropdown type='buttom' isOpen={moodToggle} toggle={handleMoodToggle}>
+                    <ButtonDropdown type='buttom' isOpen={props.moodToggle} toggle={handleMoodToggle}>
                         <DropdownToggle className='mood-toggle' type='button' caret color="secondary">
-                            <i className={getMoodIcon(mood)}></i>&nbsp;{
-                                mood === 'na' ? 'Mood' : mood
+                            <i className={getMoodIcon(props.mood)}></i>&nbsp;{
+                                props.mood === 'na' ? 'Mood' : props.mood
                             }
                         </DropdownToggle>
                         <DropdownMenu>
@@ -58,7 +80,7 @@ function PostForm (props){
                         </DropdownMenu>
                     </ButtonDropdown>
                 </div>
-                <Input className='input' type='textarea' innerRef={inputEl} value={inputValue} onChange={handleInputChange} placeholder="What's on your mind?"></Input>
+                <Input className='input' type='textarea' innerRef={inputEl} value={props.inputValue} onChange={handleInputChange} placeholder="What's on your mind?"></Input>
                 <Button className='btn-post align-self-end' color="info" onClick={handlePost}>Post</Button>
             </Alert>
         </div>

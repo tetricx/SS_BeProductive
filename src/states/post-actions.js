@@ -57,13 +57,11 @@ export function createPost(mood, text) {
         //TODO
         dispatch(startLoading());
 
-        return createPostFromApi(mood,text).then(posts => {
-            dispatch(listPosts());
+        return createPostFromApi(mood,text).then(post => {
+            dispatch(listPosts(post));
         }).catch(err => {
             console.error('Ada error cok', err);
-        }).then(() => {
-            dispatch(endCreatePost(posts))
-        });
+        }).then(()=>dispatch(endLoading()));
     };
 };
 

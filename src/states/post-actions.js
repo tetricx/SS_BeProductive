@@ -53,47 +53,88 @@ export function listPosts(searchText) {
 };
 
 export function createPost(mood, text) {
-    //TODO
+    return (dispatch, getState) => {
+        //TODO
+        dispatch(startLoading());
+
+        return createPostFromApi(mood,text).then(post => {
+            dispatch(listPosts());
+        }).catch(err => {
+            console.error('Ada error cok', err);
+        }).then(()=>dispatch(endCreatePost(post)));
+    };
 };
 
 export function createVote(id, mood) {
-    //TODO
+    return (dispatch, getState) => {
+        dispatch(startLoading());
+
+        return createVoteFromApi(id, mood).then(post => {
+            dispatch(listPosts());
+        }).catch(err => {
+            console.error('Error creating vote', err);
+        }).then(() => dispatch(endLoading()));
+    };
 };
 
 /*  Search text */
 
 export function setSearchText(searchText) {
-    // TODO
+    return {
+        type: '@SEARCH_TEXT/SET_SEARCH_TEXT',
+        searchText
+    };
 }
 
 /*  Post Form */
 
 export function input(value) {
-    //TODO
+    return {
+        type: '@POST_FORM/INPUT',
+        value
+    };
 };
 
 export function inputDanger(danger) {
-    //TODO
+    return {
+        type: '@POST_FORM/INPUT_DANGER',
+        danger
+    };
 };
 
 export function toggleMood() {
-    //TODO
+    return {
+        type: '@POST_FORM/TOGGLE_MOOD'
+    };
 };
 
 export function setMoodToggle(toggle) {
-    //TODO
+    return {
+        type: '@POST_FORM/SET_MOOD_TOGGLE',
+        toggle
+    };
 };
 
 export function selectMood(mood) {
-    //TODO
+    return {
+        type: '@POST_FORM/SELECT_MOOD',
+        mood
+    };
 };
 
 /*  Post item */
 
 export function toggleTooltip(id) {
-   //TODO
+    return {
+        type: '@POST_ITEM/TOGGLE_TOOLTIP',
+        id
+    };
 };
 
 export function setTooltipToggle(id, toggle) {
-    //TODO
+    return {
+        type: '@POST_ITEM/TOGGLE_TOOLTIP',
+        id,
+        toggle
+    };
 };

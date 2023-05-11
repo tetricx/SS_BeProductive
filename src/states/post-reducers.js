@@ -58,7 +58,12 @@ export function post(state = initPostState, action) {
 /* Search text */
 
 export function searchText(state = '', action) {
-    //TODO
+    switch (action.type) {
+        case '@SEARCH_TEXT/SET_SEARCH_TEXT':
+            return action.searchText;
+        default:
+            return state;
+    }
 }
 
 
@@ -72,7 +77,35 @@ const initPostFormState = {
 };
 
 export function postForm(state = initPostFormState, action) {
-    //TODO
+    switch (action.type) {
+        case '@POST_FORM/INPUT':
+            return {
+                ...state,
+                inputValue: action.value
+            };
+        case '@POST_FORM/INPUT_DANGER':
+            return {
+                ...state,
+                inputDanger: action.danger
+            };
+        case '@POST_FORM/TOGGLE_MOOD':
+            return {
+                ...state,
+                moodToggle: !state.moodToggle
+            };
+        case '@POST_FORM/SET_MOOD_TOGGLE':
+            return {
+                ...state,
+                moodToggle: action.toggle
+            };
+        case '@POST_FORM/SELECT_MOOD':
+            return {
+                ...state,
+                mood: action.mood
+            };
+        default:
+            return state;
+    }
 }
 
 /* Post item */
@@ -82,5 +115,22 @@ const initPostItemState = {
 };
 
 export function postItem(state = initPostItemState, action) {
-    //TODO
+    switch (action.type) {
+        case '@POST_ITEM/TOGGLE_TOOLTIP':
+            return {
+                tooltipOpen: {
+                    ...state.tooltipOpen,
+                    [action.id]: state.tooltipOpen[action.id] ? false : true
+                }
+            };
+        case '@POST_ITEM/SET_TOOLTIP_TOGGLE':
+            return {
+                tooltipOpen: {
+                    ...state.tooltipOpen,
+                    [action.id]: action.toggle
+                }
+            };
+        default:
+            return state;
+    }
 }

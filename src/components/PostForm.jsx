@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef} from 'react';
 import PropTypes from 'prop-types';
 import {
     Alert,
@@ -9,7 +9,6 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
-
 import { getMoodIcon } from 'utilities/weather.js';
 import {
     createPost,
@@ -24,9 +23,20 @@ import './PostForm.css';
 
 function PostForm (props){
     const inputEl = useRef(null);
-
+    const handleMoodToggle = () => {
+        setMoodToggle(!moodToggle);
+        dispatch(toggleMood())
+    }
+    const handleDropdownSelect = (mood) => {
+        //come back to this later
+        dispatch(selectMood(mood))
+    }
     // TODO
-
+    //handleDropdownSelect
+    //handlePost
+    //handleInputChange
+    //inputDangerClass
+    props.dispatch
     return (
         <div className="post-form">
             <Alert color='info' className={`d-flex flex-column flex-sm-row justify-content-center ${inputDangerClass}`}>
@@ -64,5 +74,7 @@ PostForm.propTypes = {
 };
 
 export default connect((state) => {
-    // TODO
+    return {
+        ...state.postForm
+      };
 })(PostForm);

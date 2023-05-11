@@ -9,7 +9,7 @@ import { cancelWeather } from 'api/open-weather-map.js';
 import { getWeather } from 'states/weather-actions.js';
 import { listPosts } from 'states/post-actions.js';
 import PostForm from 'components/PostForm.jsx';
-//import PostList from 'components/PostList.jsx';
+import PostList from 'components/PostList.jsx';
 
 import './Today.css';
 
@@ -63,7 +63,7 @@ function Today(props) {
           <i className='fa fa-paper-plane' aria-hidden='true'></i>  Posts
         </h4>
          <PostForm />
-  
+         <PostList />
         {postLoading && <Alert color='warning' className='loading'>Loading...</Alert>} 
       </div>
     </div>

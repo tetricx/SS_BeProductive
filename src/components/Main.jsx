@@ -89,8 +89,4 @@ function Main() {
     );
 };
 
-export default connect((state) => {
-    return {
-      searchText: state.searchText
-    };
-  })(Main);
+export default Main;

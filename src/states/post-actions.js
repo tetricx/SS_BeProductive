@@ -62,7 +62,7 @@ export function createPost(mood, text) {
         }).catch(err => {
             console.error('Ada error cok', err);
         }).then(() => {
-            dispatch(endCreatePost(posts))
+            dispatch(endLoading())
         });
     };
 };

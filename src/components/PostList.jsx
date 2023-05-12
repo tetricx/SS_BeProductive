@@ -9,11 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import PostItem from 'components/PostItem.jsx';
 
 import './PostList.css';
+import { listPosts } from '../states/post-actions';
 
 function PostList() {
     const posts = useSelector(state => state.post.posts);
     //TODO
-
     let children = (
         <ListGroupItem className='empty d-flex justify-content-center align-items-center'>
             <div className='empty-text'>No post here.<br />Go add some posts.</div>

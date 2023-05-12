@@ -35,9 +35,11 @@ function PostForm (props){
     const handlePost = () => {
         if(props.mood === 'na'){
             props.dispatch(setMoodToggle(true));
+            return;
         }
         if(!props.inputValue){
             props.dispatch(inputDanger(true));
+            return;
         }
         props.dispatch(createPost(props.mood, props.inputValue));
         props.dispatch(input(''));

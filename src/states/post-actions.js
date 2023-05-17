@@ -55,14 +55,13 @@ export function listPosts(searchText) {
 export function createPost(mood, text) {
     return (dispatch, getState) => {
         //TODO
-        dispatch(startLoading());
+        //remove the start loading cuz we are going to start loading during the dispatch listpost func
+        //remove the endloading cuz start and end are a pair
 
         return createPostFromApi(mood,text).then(post => {
-            dispatch(listPosts(post));
+            dispatch(listPosts());
         }).catch(err => {
             console.error('Ada error cok', err);
-        }).then(() => {
-            dispatch(endLoading())
         });
     };
 };
@@ -70,13 +69,12 @@ export function createPost(mood, text) {
 
 export function createVote(id, mood) {
     return (dispatch, getState) => {
-        dispatch(startLoading());
 
         return createVoteFromApi(id, mood).then(post => {
             dispatch(listPosts());
         }).catch(err => {
             console.error('Error creating vote', err);
-        }).then(() => dispatch(endLoading()));
+        });
     };
 };
 
